@@ -7,7 +7,7 @@ from io import StringIO
 import pyarrow as pa
 import pyarrow.parquet as pq
 
-from upload_to_gcs import upload_partitioned_dataset_skip_existing
+from upload_to_gcs import upload_partitioned_dataset_skip_existing, file_exists_in_gcs
 
 
 tz = pytz.timezone("America/Mexico_City")
@@ -72,8 +72,7 @@ month_end = now.replace(day=1)- timedelta(days=1)
 
 link_text = f"{month_end.year}-{('' if month_end.month>9 else '0')+str(month_end.month)}"
 
-hist = pd.read_parquet(DATA_PATH,columns=['file']).drop_duplicates()
-if link_text+".csv" not in hist['file'].tolist():
+if file_exists_in_gcs(link_text)==False:
 
     response = requests.get(URL)
     soup = BeautifulSoup(response.text, 'html.parser')
@@ -101,11 +100,7 @@ if link_text+".csv" not in hist['file'].tolist():
         print("File saved!")
 
         ## Upload files to GCS
-        upload_partitioned_dataset_skip_existing(
-            local_root=DATA_PATH,
-            bucket_name='bernacho-ecobici-datahub',
-            gcs_root='partitioned_historical_data'
-        )
+        upload_partitioned_dataset_skip_existing(local_root=DATA_PATH)
     else:
         print(f"File for {link_text} not found")
 else:
