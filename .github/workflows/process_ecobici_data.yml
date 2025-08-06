@@ -23,9 +23,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install pandas pyarrow beautifulsoup4 requests pytz google-cloud-storage
     
-    - name: Write GCP credentials to file
+    - name: Write GCP credentials decoded to file
       run: |
-        echo "${{ secrets.GCP_SERVICE_ACCOUNT_JSON }}" > gcs-key.json
+        echo "${{ secrets.GCP_SERVICE_ACCOUNT_JSON_BASE64 }}" | base64 -d > gcs-key.json
     
     - name: Set environment variable
       run: echo "GOOGLE_APPLICATION_CREDENTIALS=gcs-key.json" >> $GITHUB_ENV
