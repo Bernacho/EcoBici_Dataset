@@ -3,13 +3,12 @@ from google.cloud import storage
 import pyarrow.fs as fs
 import pandas as pd
 
-
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'gcs-key.json'
 
 BUCKET_NAME = 'bernacho-ecobici-datahub'
 GCS_ROOT = 'partitioned_historical_data'
 
 def file_exists_in_gcs(file_name):
-    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'gcs-key.json'
     year,month = file_name.split("-")
     year = int(year)
     month = int(month)
