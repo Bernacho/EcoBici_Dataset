@@ -3,7 +3,7 @@ name: Process and Save Dataset
 on:
   workflow_dispatch:  # manual triggering
   schedule:
-    - cron: '0 6 * * *'  # Runs daily at 6 UTC
+    - cron: '0 6 2,5,10 * *'
 
 jobs:
   process-data:

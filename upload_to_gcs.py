@@ -47,5 +47,5 @@ def upload_partitioned_dataset_skip_existing(local_root):
             if blob.exists():
                 print(f"⏩ Skipped existing file: gs://{BUCKET_NAME}/{gcs_path}")
             else:
-                # blob.upload_from_filename(local_path)
+                blob.upload_from_filename(local_path)
                 print(f"✅ Uploaded {local_path} to gs://{BUCKET_NAME}/{gcs_path}")
