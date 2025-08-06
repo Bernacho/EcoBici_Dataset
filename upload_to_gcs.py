@@ -14,6 +14,8 @@ def file_exists_in_gcs(file_name):
     month = int(month)
     filters = [("year","=",year),("month","=",month)]
 
+    print("credentials: ",os.path.exists('gcs-key.json'))
+
     _fs = fs.GcsFileSystem()
     base_path = f"{BUCKET_NAME}/{GCS_ROOT}/"
     
