@@ -26,6 +26,9 @@ jobs:
     - name: Write GCP credentials to file
       run: |
         echo "${{ secrets.GCP_SERVICE_ACCOUNT_JSON }}" > gcs-key.json
+    
+    - name: Set environment variable
+      run: echo "GOOGLE_APPLICATION_CREDENTIALS=gcs-key.json" >> $GITHUB_ENV
 
     - name: Run data processing script
       run: python get_ecobici_data.py
